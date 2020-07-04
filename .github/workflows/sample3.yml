@@ -30,7 +30,7 @@ jobs:
             }
            });
               
-           if (roleFlag) {
+           if (ruleFlag) {
             console.log("Add the maintainer")
             let maintainer = core.getInput('maintainer')
             await github.pulls.createReviewRequest({
