@@ -8,7 +8,6 @@ jobs:
     steps:
     - uses: actions/github-script@v2
       with:
-        security_team: "pedroalb"
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |          
           await github.issues.addLabels({
