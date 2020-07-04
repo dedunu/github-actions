@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: [ master ]
 jobs:
-  sample2:
+  sample3:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/github-script@v2
