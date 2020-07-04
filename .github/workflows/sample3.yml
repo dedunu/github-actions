@@ -1,0 +1,44 @@
+name: Add a comment
+on:
+  pull_request:
+    branches: [ master ]
+jobs:
+  sample2:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/github-script@v2
+      with:
+        maintainer: dedunuTW
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          console.log("Checking for files changed")
+          
+          const {
+            data: listOfFilesChanged
+          } = await github.pulls.listFiles({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number
+          });
+          
+          let ruleFlag = false;
+          
+          listOfFilesChanged.forEach(file => {
+            result = file.patch.match(/sample/g);
+            if (result !== null && result.length > 0) {
+              ruleFlag = true;
+            }
+           });
+              
+           if (roleFlag) {
+            console.log("Add the maintainer")
+            let maintainer = core.getInput('maintainer')
+            await github.pulls.createReviewRequest({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              reviewers: maintainer,
+            });
+           }
+           
+           console.log("Action was finished");
